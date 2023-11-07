@@ -1,31 +1,39 @@
 import cv2
-import datetime
 
-camera_id = 0
-delay = 1
-window_name = 'ReagentFlow QR scan'
+def scanQR():
 
-qcd = cv2.QRCodeDetector()
-cap = cv2.VideoCapture(0)
+    camera_id = 0
+    delay = 1
+    window_name = 'ReagentFlow QR scan'
 
-while True:
-    ret, frame = cap.read()
+    qcd = cv2.QRCodeDetector()
+    cap = cv2.VideoCapture(0)
 
-    if ret:
-        ret_qr, decoded_info, points, _ = qcd.detectAndDecodeMulti(frame)
-        if ret_qr:
-            for s, p in zip(decoded_info, points):
-                if s:
-                    current_datetime = datetime.datetime.now()
-                    current_time = current_datetime.strftime("%H:%M:%S")
-                    print(s, "Current time: ", current_time)
-                    color = (0, 255, 0)
-                else:
-                    color = (0, 0, 255)
-                frame = cv2.polylines(frame, [p.astype(int)], True, color, 8)
-        cv2.imshow(window_name, frame)
+    while True:
+        codeExit = False
+        result = "NONE"
 
-    if cv2.waitKey(delay) & 0xFF == ord('q'):
-        break
+        ret, frame = cap.read()
 
-cv2.destroyWindow(window_name)
+        if ret:
+            ret_qr, decoded_info, points, _ = qcd.detectAndDecodeMulti(frame)
+            if ret_qr:
+                for s, p in zip(decoded_info, points):
+                    if s and s[0] == "R" and s[4] == "F" and s[5] == "0" and s[6] == "x":
+                        result = s
+                        codeExit = True
+                    else:
+                        color = (0, 0, 255)
+                    frame = cv2.polylines(frame, [p.astype(int)], True, color, 8)
+            frame = cv2.resize(frame, None, fx=0.5, fy=0.5)
+            cv2.imshow(window_name, frame)
+            if codeExit == True:
+                return result
+
+        if cv2.waitKey(delay) & 0xFF == ord('q'):
+            break
+
+    cv2.destroyWindow(window_name)
+
+#key = scanQR()
+#print(key)
