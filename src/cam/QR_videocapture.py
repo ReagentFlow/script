@@ -34,6 +34,3 @@ def scanQR():
             break
 
     cv2.destroyWindow(window_name)
-
-#key = scanQR()
-#print(key)
