@@ -1,9 +1,11 @@
 import cv2
+import time
 
 def scanQR():
 
     camera_id = 0
     delay = 1
+    start_time = time.time()
     window_name = 'ReagentFlow QR scan'
 
     qcd = cv2.QRCodeDetector()
@@ -30,7 +32,11 @@ def scanQR():
             if codeExit == True:
                 return result
 
+        if time.time() - start_time > 20:
+            print("Function has been running for more than 20 seconds without a result.")
+            return result
+
         if cv2.waitKey(delay) & 0xFF == ord('q'):
-            break
+            return result
 
     cv2.destroyWindow(window_name)
