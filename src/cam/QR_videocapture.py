@@ -30,13 +30,14 @@ def scanQR():
             frame = cv2.resize(frame, None, fx=0.5, fy=0.5)
             cv2.imshow(window_name, frame)
             if codeExit == True:
-                return result
+                break
 
         if time.time() - start_time > 20:
             print("Function has been running for more than 20 seconds without a result.")
-            return result
+            break
 
         if cv2.waitKey(delay) & 0xFF == ord('q'):
-            return result
+            break
 
     cv2.destroyWindow(window_name)
+    return result
