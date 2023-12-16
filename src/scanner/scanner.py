@@ -39,5 +39,3 @@ def barcode_scanner():
 
     cv2.destroyWindow(window_name)
     return result
-
-print(barcode_scanner())

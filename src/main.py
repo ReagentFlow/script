@@ -10,8 +10,10 @@ if __name__ == "__main__":
     key = barcode_scanner()
     print(key)
     if key != "NONE":
-        connection = db.create_connection('./db/database/ReagentFlowDB.db')
         weight = getting_weight()
+        print(weight)
+        connection = db.create_connection('script/src/db/database/ReagentFlowDB.db')
+        print(type(connection))
         db_main.update(connection, key, weight)
         connection.close()
     else:
