@@ -48,7 +48,7 @@ if __name__ == '__main__':
     sqlite_insert_query = """INSERT INTO tab
                               (id, mass, cas, mass_cont, name, date)
                               VALUES
-                              (023, 10, '124-07-2', 5, 'Октановая кислота', '16.12.23');"""
+                              (9023800213051, 10, '-', 0, 'kores green marker', '16.12.23');"""
     c.execute(sqlite_insert_query)
     connection.commit()
     c.close()
