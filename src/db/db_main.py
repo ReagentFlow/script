@@ -12,17 +12,17 @@ def data_from_qr(data):
     cas = data[pos_end_of_num_container+3:]
     return [int(num_of_container), cas]
 
-def update(connection, str, mass: int):
-    id_container, cas = data_from_qr(str)
+def update(connection, ind: int, mass: int):
+    #id_container, cas = data_from_qr(str)
 
     # does it exsist?
-    req_except = f"""SELECT * from tab WHERE id = {id_container}"""
+    req_except = f"""SELECT * from tab WHERE id = {ind}"""
     t = db.execute_get(connection, req_except)
     if t is None:
         raise Exception("This item doesn't exist")
 
     # getting mass of container
-    req = f"""SELECT mass_cont from (SELECT * from tab WHERE id = {id_container})"""
+    req = f"""SELECT mass_cont from (SELECT * from tab WHERE id = {ind})"""
     mass_cont = db.execute_get(connection, req)[0]
     # begin updating
     updater = """
@@ -33,7 +33,7 @@ def update(connection, str, mass: int):
     WHERE
       id = ?
     """
-    db.execute_query_update(connection, updater, (mass-mass_cont), id_container)
+    db.execute_query_update(connection, updater, (mass-mass_cont), ind)
 
 if __name__ == '__main__':
     pass
