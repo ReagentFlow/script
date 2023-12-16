@@ -1,6 +1,7 @@
 import sys
 import sqlite3
 from db.database import db
+#from database.db import execute_query, execute_query_update, execute_get
 
 def data_from_qr(data):
     pos_end_of_num_container = 0

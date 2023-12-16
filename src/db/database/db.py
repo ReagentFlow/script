@@ -43,4 +43,13 @@ def execute_query_update(connection, query, mass, id):
         print(f"The error '{e}' occurred")
 
 if __name__ == '__main__':
+    connection = create_connection('./ReagentFlowDB.db')
+    c = connection.cursor()
+    sqlite_insert_query = """INSERT INTO tab
+                              (id, mass, cas, mass_cont, name, date)
+                              VALUES
+                              (023, 10, '124-07-2', 5, 'Октановая кислота', '16.12.23');"""
+    c.execute(sqlite_insert_query)
+    connection.commit()
+    c.close()
     pass
