@@ -1,6 +1,6 @@
-
 import serial
 import struct
+
 
 def decode_scale_data(hex_string):
     # Convert the hex string to bytes
@@ -12,16 +12,17 @@ def decode_scale_data(hex_string):
 
     return value
 
+
 def getting_weight():
     ser = serial.Serial('/dev/cu.usbmodem00000000001A1', 9600, timeout=1)
     s = ser.readline()
     while s == b'':
         s = ser.readline()
-    print(s)
+    # print(s)
     data = '55'
     l = int(len(s) / 2)
     s = s[1:l]
-    print(s)
+    # print(s)
     for i in s:
         t = len(hex(i)[2:])
         if t != 2:
@@ -29,8 +30,8 @@ def getting_weight():
         else:
             data += hex(i)[2:]
 
-    print(data)
+    # print(data)
     value_1 = decode_scale_data(data)
-    print(f"Data: {data}, Decoded Value: {value_1} grams")
+    print(f"Decoded Value: {value_1} grams")
     ser.close()
     return value_1

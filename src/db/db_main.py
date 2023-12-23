@@ -1,7 +1,9 @@
 import sys
 import sqlite3
 from db.database import db
-#from database.db import execute_query, execute_query_update, execute_get
+
+
+# from database.db import execute_query, execute_query_update, execute_get
 
 def data_from_qr(data):
     pos_end_of_num_container = 0
@@ -9,11 +11,12 @@ def data_from_qr(data):
         if 'F' == character:
             pos_end_of_num_container = i
     num_of_container = data[1:pos_end_of_num_container]
-    cas = data[pos_end_of_num_container+3:]
+    cas = data[pos_end_of_num_container + 3:]
     return [int(num_of_container), cas]
 
+
 def update(connection, ind: int, mass: int):
-    #id_container, cas = data_from_qr(str)
+    # id_container, cas = data_from_qr(str)
 
     # does it exsist?
     req_except = f"""SELECT * from tab WHERE id = {ind}"""
@@ -33,7 +36,8 @@ def update(connection, ind: int, mass: int):
     WHERE
       id = ?
     """
-    db.execute_query_update(connection, updater, (mass-mass_cont), ind)
+    db.execute_query_update(connection, updater, (mass - mass_cont), ind)
+
 
 if __name__ == '__main__':
     pass
